@@ -1,0 +1,17 @@
+{{- if .Values.apprise.persistence.enabled -}}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "apprise.fullname" . }}
+  labels:
+    {{- include "apprise.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ .Values.apprise.persistence.accessMode }}
+  {{- if .Values.apprise.persistence.storageClass }}
+  storageClassName: {{ .Values.apprise.persistence.storageClass }}
+  {{- end }}
+  resources:
+    requests:
+      storage: {{ .Values.apprise.persistence.size }}
+{{- end }}
